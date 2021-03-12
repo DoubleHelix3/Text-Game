@@ -2,10 +2,10 @@
 #include "userinput.h"
 
 int main() {
-    printf("Greetings traveler!\n");
-    printf("What is your name?\n-");
+    printf("greetings traveler!\n");
+    printf("what is your name?\n;");
     char name[MAX_INPUT_LENGTH];
-    userInput(name);
+    putNewLineIn(name);
     printf("%s is a nice name!\n", name);
     return 0;
 }

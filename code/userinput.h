@@ -1,3 +1,3 @@
-#define MAX_INPUT_LENGTH
+#define MAX_INPUT_LENGTH 50
 
-void userInput(char **str);
+void putNewLineIn(char *str);
