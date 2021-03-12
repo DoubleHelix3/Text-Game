@@ -7,5 +7,4 @@ int main() {
     char name[MAX_INPUT_LENGTH];
     putNewLineIn(name);
     printf("%s is a nice name!\n", name);
-    return 0;
 }
