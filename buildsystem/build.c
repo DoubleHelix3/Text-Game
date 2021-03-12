@@ -8,14 +8,15 @@ int main() {
     char *link = " && gcc -o main ../code/main.c userinput.o";
     
     int cmdLength = strlen(gotoBuildDir) + strlen(compile) + strlen(link);
-    char *cmd = malloc(cmdLength*sizeof(char)); 
+    char *cmd = malloc(cmdLength*sizeof(char));
     strcat(cmd, gotoBuildDir);
     strcat(cmd, compile);
     strcat(cmd, link);
+    printf("%s\n", cmd);
     // I have no idea why this needs to be here
     cmd+=3;
     printf("%s\n", cmd);
-    
-    system(cmd);
+
+    //system(cmd);
     return 0;
 }
