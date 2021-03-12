@@ -11,5 +11,5 @@ int main() {
     // get rid of that new line character at the end
     name[strcspn(name, "\n")] = 0;
     printf("%s is a nice name!\n", name);
-    return 0;l
+    return 0;
 }
