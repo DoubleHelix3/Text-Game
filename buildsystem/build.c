@@ -38,7 +38,7 @@ void build(char **files, int count, int totalFileNamesSize) {
     system(cmd);
 }
 
-int getFiles(char ***put, int *totalFileNameSizePtr) {
+void getFiles(char ***put, int *count, int *totalFileNameSizePtr) {
     DIR *dp;
     struct dirent *ep;
 
@@ -78,14 +78,15 @@ int getFiles(char ***put, int *totalFileNameSizePtr) {
 
     *put = files;
     *totalFileNameSizePtr = totalFileNamesSize;
-    return i;
+    *count = i;
 }
 
 int main() {
     char **files;
-    int *totalFileNamesSize = malloc(sizeof(int));
-    int count = getFiles(&files, totalFileNamesSize);
-    build(files, count, *totalFileNamesSize);
+    int count;
+    int totalFileNamesSize;
+    getFiles(&files, &count, &totalFileNamesSize);
+    build(files, count, totalFileNamesSize);
 
     return 0;
 }
