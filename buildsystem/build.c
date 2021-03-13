@@ -5,54 +5,96 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-#define BUILD_FOLDER_PATH "..//build"
-#define CODE_FOLDER_PATH "..//code"
+#define BUILD_FOLDER_PATH "..\\build"
+#define CODE_FOLDER_PATH "..\\code"
 
-void build(char **files) {
-    int cmdLength = strlen(BUILD_FOLDER_PATH) + 2*strlen(CODE_FOLDER_PATH) + 64;
+void build(char **files, int count, int totalFileNamesSize) {
+    int cmdLength = strlen(BUILD_FOLDER_PATH) + count*(strlen(CODE_FOLDER_PATH)+10) + 2*totalFileNamesSize + 100;
     char *cmd = malloc(cmdLength*sizeof(char));
     *cmd = '\0';
     strcat(cmd, "cd ");
     strcat(cmd, BUILD_FOLDER_PATH);
     strcat(cmd, " && gcc -c ");
+
+    for(int i=0; i<count; i++) {
+        strcat(cmd, CODE_FOLDER_PATH);
+        strcat(cmd, "\\");
+        strcat(cmd, files[i]);
+        strcat(cmd, " ");
+    }
+
+    strcat(cmd, " && gcc -o main ");
     strcat(cmd, CODE_FOLDER_PATH);
-    strcat(cmd, "\\userinput.c && gcc -o main ");
-    strcat(cmd, CODE_FOLDER_PATH);
-    strcat(cmd, "\\main.c userinput.o");
+    strcat(cmd, "\\main.c ");
+    
+    for(int i=0; i<count; i++) {
+        char *ofile = files[i];
+        int ofileLen = strlen(ofile);
+        ofile[ofileLen-1] = 'o';
+        strcat(cmd, ofile);
+        strcat(cmd, " ");
+    }
+
+    printf("%s\n", cmd);
 
     system(cmd);
 }
 
-char **getFiles() {
+struct GetFilesReturn {
+    int count;
+    int totalFileNamesSize;
+};
+
+struct GetFilesReturn *getFiles(char ***put) {
     DIR *dp;
     struct dirent *ep;
 
     dp = opendir(CODE_FOLDER_PATH);
-    if(dp == NULL) perror("Couldn't open the directory"); 
+    if(dp == NULL) perror("Couldn't open the directory");
     
+    int totalFileNo = 0;
+    while(ep = readdir(dp)) totalFileNo++;
+
+    char **files = malloc(totalFileNo*sizeof(char *));
+
+    (void) closedir(dp);
+    dp = opendir(CODE_FOLDER_PATH);
+    
+    int i = 0;
     int totalFileNamesSize = 0;
     while(ep = readdir(dp)) {
         char *filename = ep->d_name;
-        totalFileNamesSize += strlen(filename);
-    }
-
-    char **files = malloc(totalFileNamesSize*sizeof(char));
-
-    int i = 0;
-    while(ep = readdir(dp)) {
-        char *filename = ep->d_name;
         int len = strlen(filename);
-        if(filename[len-1] == '\n') files[++i] = filename;
+        int isCFile = filename[len-2] == '.' && filename[len-1] == 'c';
+        int isMain =    filename[0] == 'm' && 
+                        filename[1] == 'a' &&
+                        filename[2] == 'i' &&
+                        filename[3] == 'n' &&
+                        filename[4] == '.' &&
+                        filename[5] == 'c' &&
+                        filename[6] == '\0';
+        if(isCFile && !isMain) {
+            files[i] = malloc((strlen(filename)+1)*sizeof(char));
+            strcpy(files[i], filename);
+            i++;
+            totalFileNamesSize += strlen(filename);
+        }
     }
 
     (void) closedir(dp);
-    
-    return files;
+
+    *put = files;
+    struct GetFilesReturn *result = malloc(2*sizeof(int));
+    result->totalFileNamesSize = totalFileNamesSize;
+    result->count = i;
+
+    return result;
 }
 
 int main() {
-    char **files = getFiles();
-    build(files);
+    char **files;
+    struct GetFilesReturn *result = getFiles(&files);
+    build(files, result->count, result->totalFileNamesSize);
 
     return 0;
 }
