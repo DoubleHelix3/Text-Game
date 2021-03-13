@@ -9,30 +9,54 @@ void putNewLineIn(char *str) {
     str[strcspn(str, "\n")] = 0;
 }
 
-void putMultipleTimes(char *s, int n) {
-    for(int i=0; i<n; i++) {
-        printf(s);
-    }
+void printNTimes(char *str, int n) {
+    for(int i=0; i<n; i++) printf(str);
 }
 
+
+// Will be one less \n at the start
+void blankLineAfterPrompt() {
+
+}
 void blankLine() {
     printf("\n");
+    blankLineAfterPrompt();
 }
 
 void blankSpace() {
     printf(" ");
 }
 
-void say(char *text) {
+void startLine() {
     printf(" >");
     blankSpace();
+}
+
+void say(char *text) {
+    startLine();
     printf(text);
     blankLine();
 }
 
 void prompt(char *answer, char *prompt) {
-    say(prompt);
+    startLine();
+    printf("%s\n", prompt);
     blankSpace();
     printf(" ; ");
     putNewLineIn(answer);
+    blankLineAfterPrompt();
+}
+
+
+void start() {
+    printf("\n");
+    blankSpace();
+    printf("text adventure >:)\n");
+    blankLine();
+}
+
+void end() {
+    blankLine();
+    blankSpace();
+    printf("adventure over ;(\n\n\n");
 }

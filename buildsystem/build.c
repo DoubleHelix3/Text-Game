@@ -9,6 +9,7 @@
 #define CODE_FOLDER_PATH "..\\code"
 
 void build(char **files, int count, int totalFileNamesSize) {
+    // We're going to create a command that does everything for us, then run that command
     int cmdLength = count*(strlen(CODE_FOLDER_PATH)+10) + 2*totalFileNamesSize + 100;
     char *cmd = malloc(cmdLength*sizeof(char));
     *cmd = '\0';
@@ -28,6 +29,7 @@ void build(char **files, int count, int totalFileNamesSize) {
     sprintf(text, " && gcc -o main %s\\main.c ", CODE_FOLDER_PATH);
     strcat(cmd, text);
     for(int i=0; i<count; i++) {
+        // the .c files will have extension .o after compilation
         char *ofile = files[i];
         int ofileLen = strlen(ofile);
         ofile[ofileLen-1] = 'o';

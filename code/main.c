@@ -4,21 +4,22 @@
 #include "ioapi.h"
 
 int main() {
-    char text[500];
+    char in[MAX_INPUT_LENGTH];
+    char out[MAX_OUTPUT_LENGTH];
 
-    blankLine();
+    start();
+
     say("greetings traveler!");
 
-    char name[MAX_INPUT_LENGTH];
-    prompt(name, "what is your name?");
-    sprintf(text, "%s is a nice name.", name);
-    say(text);
+    prompt(in, "what is your name?");
+    sprintf(out, "%s is a nice name.", in);
+    say(out);
     
-    char place[MAX_INPUT_LENGTH];
-    prompt(place, "where are you from?");
-    sprintf(text, "%s is a really far off land.", place);
-    say(text);
-    blankLine();
-
+    prompt(in, "where are you from?");
+    sprintf(out, "%s is a really far off land.", in);
+    say(out);
+    
+    end();
+    
     return 0;
 }
