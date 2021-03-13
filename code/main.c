@@ -6,7 +6,7 @@ int main() {
     printf("what is your name?\n;");
     char name[MAX_INPUT_LENGTH];
     putNewLineIn(name);
-    printf("%s is a nice name!\n", name);
+    printf("%s is a nice name.\n", name);
 
     return 0;
 }

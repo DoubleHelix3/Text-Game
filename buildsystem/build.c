@@ -35,17 +35,10 @@ void build(char **files, int count, int totalFileNamesSize) {
         strcat(cmd, " ");
     }
 
-    printf("%s\n", cmd);
-
     system(cmd);
 }
 
-struct GetFilesReturn {
-    int count;
-    int totalFileNamesSize;
-};
-
-struct GetFilesReturn *getFiles(char ***put) {
+int getFiles(char ***put, int *totalFileNameSizePtr) {
     DIR *dp;
     struct dirent *ep;
 
@@ -60,8 +53,8 @@ struct GetFilesReturn *getFiles(char ***put) {
     (void) closedir(dp);
     dp = opendir(CODE_FOLDER_PATH);
     
-    int i = 0;
     int totalFileNamesSize = 0;
+    int i = 0;
     while(ep = readdir(dp)) {
         char *filename = ep->d_name;
         int len = strlen(filename);
@@ -84,17 +77,15 @@ struct GetFilesReturn *getFiles(char ***put) {
     (void) closedir(dp);
 
     *put = files;
-    struct GetFilesReturn *result = malloc(2*sizeof(int));
-    result->totalFileNamesSize = totalFileNamesSize;
-    result->count = i;
-
-    return result;
+    *totalFileNameSizePtr = totalFileNamesSize;
+    return i;
 }
 
 int main() {
     char **files;
-    struct GetFilesReturn *result = getFiles(&files);
-    build(files, result->count, result->totalFileNamesSize);
+    int *totalFileNamesSize = malloc(sizeof(int));
+    int count = getFiles(&files, totalFileNamesSize);
+    build(files, count, *totalFileNamesSize);
 
     return 0;
 }
