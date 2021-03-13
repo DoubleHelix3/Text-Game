@@ -13,50 +13,33 @@ void printNTimes(char *str, int n) {
     for(int i=0; i<n; i++) printf(str);
 }
 
-
-// Will be one less \n at the start
-void blankLineAfterPrompt() {
-
-}
-void blankLine() {
-    printf("\n");
-    blankLineAfterPrompt();
-}
-
-void blankSpace() {
-    printf(" ");
-}
-
-void startLine() {
-    printf(" >");
-    blankSpace();
-}
+#define NEW_LINE "\n"
+#define BLANK_SPACE "   "
+#define INDICATOR "> "
+#define PROMPT_INDICATOR "> "
 
 void say(char *text) {
-    startLine();
-    printf(text);
-    blankLine();
+    printf("%s%s%s%s", NEW_LINE, BLANK_SPACE, INDICATOR, text);
 }
 
 void prompt(char *answer, char *prompt) {
-    startLine();
-    printf("%s\n", prompt);
-    blankSpace();
-    printf(" ; ");
+    printf("%s%s%s%s\n%s", NEW_LINE, BLANK_SPACE, INDICATOR, prompt, BLANK_SPACE);
+    printNTimes(" ", strlen(INDICATOR));
+    printf(PROMPT_INDICATOR);
     putNewLineIn(answer);
-    blankLineAfterPrompt();
+    
+    char *newLine = NEW_LINE;
+    // get rid of first new line
+    newLine[0] = ' ';
+    print(newLine);
 }
 
 
 void start() {
-    printf("\n");
-    blankSpace();
-    printf("text adventure >:)\n");
-    blankLine();
+    printf("\n%s", BLANK_SPACE);
+    printf("text adventure ;)\n%s", NEW_LINE);
 }
 
 void end() {
-    blankLine();
-    blankSpace();
-    printf("adventure over ;(\n\n\n");
+    printf("%s%sadventure over ;(\n\n\n", NEW_LINE, BLANK_SPACE);
 }
