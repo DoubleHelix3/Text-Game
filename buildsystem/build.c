@@ -14,6 +14,7 @@ void build(char **files, int count, int totalFileNamesSize) {
     *cmd = '\0';
     strcat(cmd, "cd ");
     strcat(cmd, BUILD_FOLDER_PATH);
+    strcat(cmd, " && del *");
     strcat(cmd, " && gcc -c ");
 
     for(int i=0; i<count; i++) {

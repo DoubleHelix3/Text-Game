@@ -1,12 +1,24 @@
+#include <stdlib.h>
 #include <stdio.h>
-#include "userinput.h"
+
+#include "ioapi.h"
 
 int main() {
-    printf("greetings traveler!\n");
-    printf("what is your name?\n;");
+    char text[500];
+
+    blankLine();
+    say("greetings traveler!");
+
     char name[MAX_INPUT_LENGTH];
-    putNewLineIn(name);
-    printf("%s is a nice name.\n", name);
+    prompt(name, "what is your name?");
+    sprintf(text, "%s is a nice name.", name);
+    say(text);
+    
+    char place[MAX_INPUT_LENGTH];
+    prompt(place, "where are you from?");
+    sprintf(text, "%s is a really far off land.", place);
+    say(text);
+    blankLine();
 
     return 0;
 }
