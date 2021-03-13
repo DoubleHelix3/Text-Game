@@ -9,25 +9,24 @@
 #define CODE_FOLDER_PATH "..\\code"
 
 void build(char **files, int count, int totalFileNamesSize) {
-    int cmdLength = strlen(BUILD_FOLDER_PATH) + count*(strlen(CODE_FOLDER_PATH)+10) + 2*totalFileNamesSize + 100;
+    int cmdLength = count*(strlen(CODE_FOLDER_PATH)+10) + 2*totalFileNamesSize + 100;
     char *cmd = malloc(cmdLength*sizeof(char));
     *cmd = '\0';
-    strcat(cmd, "cd ");
-    strcat(cmd, BUILD_FOLDER_PATH);
-    strcat(cmd, " && del *");
-    strcat(cmd, " && gcc -c ");
+    
+    char text[100];
 
+    sprintf(text, "cd %s", BUILD_FOLDER_PATH);
+    strcat(cmd, text);
+    strcat(cmd, " && del * /q");
+
+    strcat(cmd, " && gcc -c ");
     for(int i=0; i<count; i++) {
-        strcat(cmd, CODE_FOLDER_PATH);
-        strcat(cmd, "\\");
-        strcat(cmd, files[i]);
-        strcat(cmd, " ");
+        sprintf(text, "%s\\%s ", CODE_FOLDER_PATH, files[i]);
+        strcat(cmd, text);
     }
 
-    strcat(cmd, " && gcc -o main ");
-    strcat(cmd, CODE_FOLDER_PATH);
-    strcat(cmd, "\\main.c ");
-    
+    sprintf(text, " && gcc -o main %s\\main.c ", CODE_FOLDER_PATH);
+    strcat(cmd, text);
     for(int i=0; i<count; i++) {
         char *ofile = files[i];
         int ofileLen = strlen(ofile);
