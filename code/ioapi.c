@@ -15,7 +15,7 @@ void printNTimes(char *str, int n) {
 
 #define NEW_LINE "\n"
 #define BLANK_SPACE "   "
-#define INDICATOR "> "
+#define INDICATOR "* "
 #define PROMPT_INDICATOR "> "
 
 void say(char *text) {
@@ -29,17 +29,17 @@ void prompt(char *answer, char *prompt) {
     putNewLineIn(answer);
     
     char *newLine = NEW_LINE;
-    // get rid of first new line
-    newLine[0] = ' ';
-    print(newLine);
+    // gets rid of first new line character
+    newLine++;
+    printf(newLine);
 }
 
 
 void start() {
     printf("\n%s", BLANK_SPACE);
-    printf("text adventure ;)\n%s", NEW_LINE);
+    printf("text adventure ;)%s", NEW_LINE);
 }
 
 void end() {
-    printf("%s%sadventure over ;(\n\n\n", NEW_LINE, BLANK_SPACE);
+    printf("\n%s%sadventure over ;(\n\n", NEW_LINE, BLANK_SPACE);
 }
