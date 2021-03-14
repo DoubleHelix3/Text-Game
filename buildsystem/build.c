@@ -5,8 +5,8 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-#define BUILD_FOLDER_PATH "..\\build"
-#define CODE_FOLDER_PATH "..\\code"
+const char *BUILD_FOLDER_PATH = "..\\build";
+const char *CODE_FOLDER_PATH "..\\code";
 
 void build(char **files, int count, int totalFileNamesSize) {
     // We're going to create a command that does everything for us, then run that command

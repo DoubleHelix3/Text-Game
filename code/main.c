@@ -3,23 +3,36 @@
 
 #include "ioapi.h"
 
+typedef int Type;
+const int NUM_TYPES = 4;
+const Type NORMAL = 0; 
+const Type WATER = 1;
+const Type EARTH = 2;
+const Type FIRE = 3;
+
+typedef struct {
+    char *name;
+    int dmg;
+    Type type;
+} Attack;
+
+Attack newAttack(char *name, int dmg) {
+    Attack attack = {name, dmg};
+    return attack;
+}
+
+int putAllAttacks(Attack *attacks) {
+    int attacksLength = 2;
+    attacks = malloc(attacksLength*sizeof(Attack));
+    attacks[0] = newAttack("jab", 10);
+    attacks[1] = newAttack("side kick", 20);
+    return attacksLength;
+}
+
 int main() {
-    char in[MAX_INPUT_LENGTH];
-    char out[MAX_OUTPUT_LENGTH];
+    Attack *attacks;
+    int attacksLength = putAllAttacks(attacks);
 
-    start();
-
-    say("greetings traveler!");
-
-    prompt(in, "what is your name?");
-    sprintf(out, "%s is a nice name.", in);
-    say(out);
-    
-    prompt(in, "where are you from?");
-    sprintf(out, "%s is a really far off land.", in);
-    say(out);
-    
-    end();
-    
+    free(attacks);
     return 0;
 }
