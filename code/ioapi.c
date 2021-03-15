@@ -14,10 +14,10 @@ void printNTimes(char *str, int n) {
     for(int i=0; i<n; i++) printf(str);
 }
 
-const char *NEW_LINE = "\n";
-const char *BLANK_SPACE = "   ";
-const char *INDICATOR = "* ";
-const char *PROMPT_INDICATOR = "> ";
+#define NEW_LINE "\n"
+#define BLANK_SPACE "   "
+#define INDICATOR "* "
+#define PROMPT_INDICATOR "> "
 
 void say(char *text) {
     printf("%s%s%s%s", NEW_LINE, BLANK_SPACE, INDICATOR, text);
@@ -29,8 +29,7 @@ void prompt(char *answer, char *prompt) {
     printf(PROMPT_INDICATOR);
     putNewLineIn(answer);
     
-    char *newLine = malloc(strlen(NEW_LINE)*sizeof(char));
-    strcpy(newLine, NEW_LINE);
+    char *newLine = NEW_LINE;
     // gets rid of first new line character
     newLine++;
     printf(newLine);
