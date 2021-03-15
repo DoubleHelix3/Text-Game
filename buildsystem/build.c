@@ -5,8 +5,8 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-const char *BUILD_FOLDER_PATH = "..\\build";
-const char *CODE_FOLDER_PATH "..\\code";
+#define BUILD_FOLDER_PATH "..\\build"
+#define CODE_FOLDER_PATH "..\\code"
 
 void build(char **files, int count, int totalFileNamesSize) {
     // We're going to create a command that does everything for us, then run that command
@@ -26,7 +26,7 @@ void build(char **files, int count, int totalFileNamesSize) {
         strcat(cmd, text);
     }
 
-    sprintf(text, " && gcc -o main %s\\main.c ", CODE_FOLDER_PATH);
+    sprintf(text, " && gcc -o run %s\\main.c ", CODE_FOLDER_PATH);
     strcat(cmd, text);
     for(int i=0; i<count; i++) {
         // the .c files will have extension .o after compilation
