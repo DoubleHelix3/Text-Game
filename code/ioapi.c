@@ -1,11 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdarg.h>
 
-#include "ioapi.h"
-
-void putNewLineIn(char *inputBuffer) {
-    fgets(inputBuffer, MAX_INPUT_LENGTH, stdin);
+void putNewLineIn(char *textBuffer, int maxInputLength) {
+    fgets(textBuffer, maxInputLength, stdin);
     // get rid of that new line character at the end
-    inputBuffer[strcspn(inputBuffer, "\n")] = 0;
+    textBuffer[strcspn(textBuffer, "\n")] = 0;
 }

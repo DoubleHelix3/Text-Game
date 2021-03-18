@@ -1,3 +1,3 @@
-#define MAX_INPUT_LENGTH 50
+void putNewLineIn(char *out_textBuffer, int maxInputLength);
 
-void putNewLineIn(char *inputBuffer);
+void putNewLineOut(const char *format, ...);
